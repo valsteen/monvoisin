@@ -1,0 +1,83 @@
+<html>
+<meta charset="UTF-8">
+<style>
+    img {
+        position: absolute;
+    }
+
+    input, input:focus {
+        position: absolute;
+        transform: rotate(2.35deg);
+        font-family: Verdana, Geneva, Tahoma, Arial, Helvetica, sans-serif;
+        left: 350px;
+        top: 75px;
+        background-color: transparent;
+        font-size: 15px;
+        width: 300px;
+        color: #577BaB;
+        border: none;
+        outline: 0;
+    }
+
+    div {
+        position: relative;
+        margin: 0 auto;
+        border: 1px solid #000;
+        width: 660px;
+    }
+</style>
+<body onload="go()">
+<script>
+    function go() {
+        var denonciations = [
+            "Mon voisin travaille au noir",
+            "Mon voisin commente sur sudpresse.be",
+            "Mon voisin a voté MR",
+            "Mon voisin écoute du David Guetta",
+            "Mon voisin Ã©crit en UTF-8",
+            "Mon voisin est en cagoule devant le PC"
+        ];
+
+        var input = document.getElementsByTagName("input")[0];
+        input.focus();
+        input.selectionStart = input.selectionEnd = input.value.length;
+
+        function commonStart(text1, text2) {
+            for (var i = 0; i < Math.min(text1.length, text2.length); ++i) {
+                if (text1.substr(0, i) != text2.substr(0, i)) return i - i;
+            }
+        }
+
+        function changeText(newText) {
+            if (newText.indexOf(input.value) === -1) {
+                setTimeout(function () {
+                    input.value = input.value.substr(0, input.value.length - 1);
+                    changeText(newText);
+                }, 100);
+                return;
+            }
+            if (newText != input.value) {
+                setTimeout(function () {
+                    input.value = input.value + newText.substr(input.value.length, 1);
+                    changeText(newText);
+                }, 100);
+                return ;
+            }
+            next();
+        }
+
+
+        function next() {
+            setTimeout(function () {
+                changeText(denonciations[Math.floor(Math.random()*denonciations.length)]);
+            }, 1000);
+        }
+        next();
+    }
+</script>
+<div>
+    <img src="1064913.jpg"/>
+    <input type="text" value="Mon voisin travaille au noir"/>
+</div>
+</body>
+</html>
